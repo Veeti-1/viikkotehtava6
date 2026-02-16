@@ -7,7 +7,7 @@ export default function App() {
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false)
   const[barcode,setBarcode] = useState([])
-  
+
     if(!permission){
       return <View/>
     }
@@ -37,8 +37,8 @@ const handleBarCode= ({type,data}:any) => {
         <View>
           <Button title='scan again' onPress={()=>{setScanned(false)}}></Button>
         </View>
-        </View>
-          )}
+      </View>
+      )}
       <StatusBar style="auto" />
     </View>
   );
