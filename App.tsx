@@ -21,22 +21,31 @@ if(!permission.granted){
 
 const handleBarCode= ({type,data}:any) => {
 
-    console.log(type)
-    console.log(data)
+
     
   setScanned(true)
   setBarcode(data)
 }
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} barcodeScannerSettings={{barcodeTypes:["ean8","ean13"]}} facing={'front'} onBarcodeScanned={scanned ? undefined : handleBarCode}></CameraView>
-      <View style={styles.barcode}>
-          {scanned === true && (
-            <Text>Barcode: {barcode}
-            <Button title='scan again' onPress={()=>{setScanned(false)}}></Button>
-            </Text>
-          )}
+      <View style={styles.cameraContainer}>
+      <CameraView style={styles.camera} barcodeScannerSettings={{barcodeTypes:["ean8","ean13"]}} facing={'back'} onBarcodeScanned={scanned ? undefined : handleBarCode}/>
       </View>
+      {scanned === true && (
+     
+      <View style={styles.barcode}>
+          
+            
+            <View>
+            <Text style={styles.text} >Barcode: {barcode}</Text>
+            </View>
+            <View>
+            <Button title='scan again' onPress={()=>{setScanned(false)}}></Button>
+            </View>
+            </View>
+          
+          )}
+      
     
       <StatusBar style="auto" />
     </View>
@@ -46,20 +55,45 @@ const handleBarCode= ({type,data}:any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:'column',
+    justifyContent:'center',
+    alignItems:'center',
+    
+  
    
-   
-    justifyContent: 'center',
-  }, camera:{
-    flex:1
-  },buttonContainer: {
+    
+  },cameraContainer:{
+    backgroundColor:'transparent',
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    width:'100%',
+
+
+  },
+   camera:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    width:'100%',
+    backgroundColor:'transparent',
+  }
+  ,barcode:{
+  
+    
     position: 'absolute',
     bottom: 64,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    width: '100%',
-    paddingHorizontal: 64,
-  },barcode:{
-    flex :1,
+    backgroundColor:'#00000067',
+  borderColor:'#000',
+  borderWidth:1,
+  alignItems:'center',
+    padding:10,
+  },text:{
+
+    fontSize:16,
+    color:'#ffff',
+   
+
     
-  }
+    }
 });
