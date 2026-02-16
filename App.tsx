@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,Button } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import React,{useState} from 'react';
 export default function App() {
-   const [facing, setFacing] = useState<CameraType>('back');
+ 
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false)
   const[barcode,setBarcode] = useState([])
@@ -18,29 +18,26 @@ if(!permission.granted){
     </View>
   )
 }
-const changeCamera = () => {
-  setFacing(current=>(current==='back' ? 'front':'back'))
-}
+
 const handleBarCode= ({type,data}:any) => {
 
     console.log(type)
+    console.log(data)
+    
   setScanned(true)
   setBarcode(data)
 }
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} barcodeScannerSettings={{barcodeTypes:["ean8","ean13"]}} facing={facing} onBarcodeScanned={scanned ? undefined : handleBarCode}></CameraView>
-      <View>
+      <CameraView style={styles.camera} barcodeScannerSettings={{barcodeTypes:["ean8","ean13"]}} facing={'front'} onBarcodeScanned={scanned ? undefined : handleBarCode}></CameraView>
+      <View style={styles.barcode}>
           {scanned === true && (
             <Text>Barcode: {barcode}
             <Button title='scan again' onPress={()=>{setScanned(false)}}></Button>
             </Text>
           )}
       </View>
-      <View style={styles.buttonContainer}>
-      <Button title='FlipCamera' onPress={()=>{changeCamera}}></Button>
-
-      </View>
+    
       <StatusBar style="auto" />
     </View>
   );
@@ -50,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
    
-    alignItems: 'center',
+   
     justifyContent: 'center',
   }, camera:{
     flex:1
@@ -61,5 +58,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: '100%',
     paddingHorizontal: 64,
-  },
+  },barcode:{
+    flex :1,
+    
+  }
 });
