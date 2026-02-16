@@ -12,7 +12,7 @@ if(!permission){
 }
 if(!permission.granted){
   return(
-    <View>
+    <View style={styles.container}>
       <Text>We need your permission to use camera in out app</Text>
       <Button onPress={requestPermission} title="grant permission" />
     </View>
@@ -29,7 +29,7 @@ const handleBarCode= ({type,data}:any) => {
 }
   return (
     <View style={styles.container}>
-      <CameraView barcodeScannerSettings={{barcodeTypes:["ean8","ean13"]}} facing={facing} onBarcodeScanned={scanned ? undefined : handleBarCode}></CameraView>
+      <CameraView style={styles.camera} barcodeScannerSettings={{barcodeTypes:["ean8","ean13"]}} facing={facing} onBarcodeScanned={scanned ? undefined : handleBarCode}></CameraView>
       <View>
           {scanned === true && (
             <Text>Barcode: {barcode}
@@ -37,7 +37,10 @@ const handleBarCode= ({type,data}:any) => {
             </Text>
           )}
       </View>
+      <View style={styles.buttonContainer}>
       <Button title='FlipCamera' onPress={()=>{changeCamera}}></Button>
+
+      </View>
       <StatusBar style="auto" />
     </View>
   );
@@ -49,5 +52,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  }, camera:{
+    flex:1
+  },buttonContainer: {
+    position: 'absolute',
+    bottom: 64,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    width: '100%',
+    paddingHorizontal: 64,
   },
 });
